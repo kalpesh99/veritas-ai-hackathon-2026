@@ -10,7 +10,7 @@ function renderTopics(matches,heading){
  const a=document.createElement('a');a.href=t.url;a.target='_blank';a.rel='noopener noreferrer';a.referrerPolicy='no-referrer';a.textContent='Read the NIDDK source ↗';
  article.append(h,p,q,a);$('resources').append(article);}
 }
-function clearOutput(){lastSummary='';$('summary-panel').hidden=true;$('copy-status').textContent='';renderTopics([],'Your matched reading will appear here. You can also browse every topic.');}
+function clearOutput(){lastSummary='';$('summary').textContent='';$('summary-panel').hidden=true;$('copy-status').textContent='';renderTopics([],'Your matched reading will appear here. You can also browse every topic.');}
 $('prep-form').addEventListener('submit',e=>{e.preventDefault();
  const concern=$('concern').value.trim();const chosen=[...document.querySelectorAll('input[name=change]:checked')].map(x=>x.value);
  if(!concern&&!chosen.length){$('form-status').textContent='Write a question or select a change first.';$('concern').focus();return;}
