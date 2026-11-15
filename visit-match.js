@@ -11,8 +11,9 @@
  const bags=topics.map(t=>tokens(t.title+' '+t.terms));
  const vocabulary=[...new Set(bags.flat())].sort();
  const idf=Object.fromEntries(vocabulary.map(w=>[w,Math.log((1+topics.length)/(1+bags.filter(b=>b.includes(w)).length))+1]));
- function vector(words){const v={};for(const w of words)if(idf[w])v[w]=(v[w]||0)+1;for(const w in v)v[w]*=idf[w];const n=Math.hypot(...Object.values(v));if(n)for(const w in v)v[w]/=n;return v;}
+ function vector(words){const v=Object.create(null);for(const w of words)if(Object.hasOwn(idf,w))v[w]=(v[w]||0)+1;for(const w in v)v[w]*=idf[w];const n=Math.hypot(...Object.values(v));if(n)for(const w in v)v[w]/=n;return v;}
  const docs=bags.map(vector);
  function match(query){const q=vector(tokens(query));return topics.map((t,i)=>({...t,similarity:Object.keys(q).reduce((s,w)=>s+q[w]*(docs[i][w]||0),0)})).filter(t=>t.similarity>0).sort((a,b)=>b.similarity-a.similarity);}
- const api={topics,match,tokens};if(typeof module==='object'&&module.exports)module.exports=api;else root.VisitMatch=api;
+ function explain(query,topicId){const words=[...new Set(tokens(query))];const index=topics.findIndex(t=>t.id===topicId);const q=vector(tokens(query));return {matched:words.filter(w=>index>=0&&q[w]&&docs[index][w]),unrecognized:words.filter(w=>!Object.hasOwn(idf,w)),recognized:words.filter(w=>Object.hasOwn(idf,w))};}
+ const api={topics,match,tokens,explain};if(typeof module==='object'&&module.exports)module.exports=api;else root.VisitMatch=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
