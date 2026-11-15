@@ -1,11 +1,9 @@
-# Two-minute demo outline
+# HealthNotes demo outline (under two minutes)
 
-Use synthetic panels only. Speak in your own words after understanding the code and results.
+1. Problem: someone at home has a diabetes question but no lab report. We help prepare a conversation, not diagnose.
+2. Click the fictional example. Explain that everyday words and selected changes query a local TF-IDF topic matcher. Show direct NIDDK links and suggested clinician questions.
+3. Show personal notes, Print / save as PDF, Clear all, and that editing invalidates old notes. No accounts or API keys.
+4. Try “Why am I feeling washed out lately?”: no match, no reassurance; Browse all topics remains available.
+5. Explain 12/15 synthetic topic matches vs 5/15 baseline, three retained failures. This is not medical accuracy. Mention English-only, tiny authored catalog, no clinician validation or urgency assessment. Next step: independent relevance and usability evaluation.
 
-- **0:00–0:15 — Problem:** A nurse exploring an incomplete panel may see a confident-looking model score. KidneyLens makes the gaps visible.
-- **0:15–0:55 — App:** Select Routine-looking, then CKD-like. Show the pattern and contributions. Select Missing labs, point to estimated values, then clear one more field so the score is withheld. Explain that the app is not a diagnosis or medical advice.
-- **0:55–1:25 — Evidence:** On 75 reserved records, it caught 45 of 46 CKD labels, missed one and made two false alarms. Always CKD caught all 46 but made 29 false alarms. Validation, not test data, selected the model and threshold.
-- **1:25–1:45 — Own contribution:** Precision fell from 95.7% to 93.1% and 87.5% when one or two more labs were hidden. Recall stayed high partly because more records were flagged. Missing information changes what a number means.
-- **1:45–2:00 — Limits:** Small retrospective study, no external validation. Next: another data source and qualified-user review. Credit UCI and the AI/development tools used.
-
-Do not describe 96% test accuracy as reliability for real patients or the score as a personal disease probability. No video is recorded or submitted automatically.
+Review source, understand TF-IDF, and explain in your own words. No real health information in the recording. Team identity and a one-page write-up still need preparation for submission.

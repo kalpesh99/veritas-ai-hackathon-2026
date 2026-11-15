@@ -1,58 +1,40 @@
-# KidneyLens
+# HealthNotes
 
-**Track: AI + Health · Veritas AI International High School Hackathon 2026**
+**AI + Health · Veritas AI 2026 · Prototype, not medical advice**
 
-**This project is a prototype and is not medical advice.**
+[Open the app](https://kalpesh99.github.io/veritas-ai-hackathon-2026/) · [Methods](METHODS.md) · [Results](evaluation/visit-results.json)
 
-[Open the app](https://kalpesh99.github.io/veritas-ai-hackathon-2026/) · [Methods and limitations](METHODS.md) · [Complete results](evaluation/results.json)
+People at home may have concerns about diabetes but no laboratory results. HealthNotes turns everyday questions into a printable visit-preparation sheet and retrieves relevant educational topics from a small NIDDK-based catalog. It cannot tell someone whether they have diabetes, whether they can safely wait, or what treatment to take.
 
-## The problem
+## Main AI task
 
-A nurse exploring a lab panel may have incomplete results. A model can still produce a confident-looking number after replacing unknown values. KidneyLens asks: **how does missing laboratory information change a kidney-disease classifier?** It is an educational model explorer, not a diagnosis, future-risk estimate or urgency assessment.
+A browser-local TF-IDF information-retrieval model fits word importance on three authored topic documents, then uses cosine similarity to rank symptoms, testing and management information. The user's concern and selected changes are the query. Optional context is copied to notes but not used by the model. No generative model, API key or remote inference is involved. Unknown phrasing can produce no match. The app always allows browsing every topic.
 
-## What we built
+## What we tested
 
-A browser app uses age, random blood glucose, blood urea, serum creatinine, hemoglobin, urine specific gravity and urine albumin grade. It shows a pattern summary, model contributions and every estimated value. Synthetic examples make it easy to test. Entries are not uploaded or saved. Excessive missingness, missing adult age and out-of-training-range values withhold the score; these are demo guardrails, not clinical rules.
+A frozen set of **15 author-written synthetic questions**, five per topic: **12/15 top-1 matches (80%)**, versus **5/15 (33.3%)** for always returning symptoms. Three queries had no vocabulary overlap: “washed out,” “eat for supper,” and “heredity.” These are kept as failures, not patched to raise the result. Labels were assigned by the author; this is a tiny, non-independent retrieval demonstration, **not clinical accuracy or patient validation**. Five automated edge-case checks also pass. See the complete queries and predictions in the results file.
 
-## What we added
+## Run
 
-**Our own idea:** a missing-lab stress test and an interface that exposes imputation. We hid one or two additional test-set lab values in 20 fixed random trials, keeping the model and threshold unchanged. Mean precision fell from **95.7%** to **93.1%** and **87.5%**. Recall was **97.8%**, **96.3%** and **97.0%**. Missing information increased false alarms even when recall stayed high. Random masking is not external validation.
-
-## How it works
-
-The public UCI Chronic Kidney Disease dataset has 400 records. Our adult-only analysis retains **372**, excluding 19 children and 9 unknown ages. We use 223 training, 74 validation and 75 reserved test records, grouping identical input profiles. Training-only imputation, scaling and categorical encoding feed logistic regression. Validation selects regularization and a threshold retaining at least 90% validation recall; test results never influence that choice.
-
-## Results and failures
-
-| Reserved test: 75 records | Always-CKD baseline | KidneyLens |
-| --- | ---: | ---: |
-| Accuracy | 61.3% | 96.0% |
-| Precision | 61.3% | 95.7% |
-| Recall | 100.0% | 97.8% |
-| Missed CKD labels | 0 | **1 of 46** |
-| False alarms | 29 | **2 of 29 non-CKD** |
-
-The three errors all had missing hemoglobin; that association does not establish the cause. The missed case scored 30.4%, below the 31.7% threshold. Recall’s approximate 95% interval is 88.7–99.6%, precision’s 85.8–98.8%. A small selected sample and diagnosis-related labs can make performance look strong. Scores are not validated personal disease probabilities. External testing, calibration and broader subgroup evaluation remain unfinished.
-
-## Next steps
-
-Test an independent source with compatible units; investigate structured missingness and whether abstention helps users. Have qualified users review the workflow before any real-world use.
-
-## Run and verify
-
-```bash
-python -m pip install -r requirements.txt
-python train.py
-node tests/test_inference.cjs
+```sh
 python serve.py
+# Open http://127.0.0.1:8770/
+node tests/visit-benchmark.cjs
 ```
 
-Open `http://127.0.0.1:8770/`. Model files and results are included; retraining is optional for running the app. Training downloads the public source to an ignored `.cache/` folder and verifies its SHA-256. No API key is required.
+No packages or credentials are needed for the active app. The benchmark rewrites its result JSON; it does not modify the model. The current UI loads only index.html, visit.css, visit-match.js and visit-app.js. Entries exist only in page memory. No analytics, storage or uploads; opening source links contacts NIDDK. Printing/copying produces a user-controlled copy. Browser extensions and browser-managed form restoration are outside this app's control.
 
-## Sources and tools
+## Contribution, limitations and next steps
 
-- Rubini, Soundarapandian & Eswaran (2015), [UCI Chronic Kidney Disease](https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease), [DOI](https://doi.org/10.24432/C5G020), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Features/categories follow that source.
-- [scikit-learn](https://scikit-learn.org/), [pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/), [Matplotlib](https://matplotlib.org/): modeling, processing, evaluation and figures.
-- [ChatGPT / OpenAI Codex](https://openai.com/codex/): assistance with scoping, implementation, debugging, explanations and documentation. The participant must review and understand the work before submission.
+Our contribution is a local question-to-resource workflow paired with editable everyday inputs and a printable summary that distinguishes the person's statements from suggested clinician questions. No disease score is shown. Current scope is diabetes, English, three topics. It does not understand negation, paraphrases, urgency, or medical context; keyword overlap can return inappropriate reading. No clinician or user study has been conducted. Next: independently labeled real-world questions collected with consent, relevance review by a qualified professional, and a broader catalog with meaningful out-of-scope evaluation. Do not generalize the synthetic score to real users.
 
-Fresh work began November 15, 2026. No pre-event practice code, model or evaluation result was imported. Team identity is supplied separately on the submission form. [Demo outline](DEMO.md).
+## Sources and assistance
+
+Summaries are authored paraphrases based on NIDDK pages, consulted November 15, 2026:
+- [Symptoms & causes](https://www.niddk.nih.gov/health-information/diabetes/overview/symptoms-causes)
+- [Tests & diagnosis](https://www.niddk.nih.gov/health-information/diabetes/overview/tests-diagnosis)
+- [Managing diabetes](https://www.niddk.nih.gov/health-information/diabetes/overview/managing-diabetes)
+
+Catalog vocabulary and synthetic queries were authored for this project with ChatGPT/OpenAI Codex assistance, as were implementation, tests and documentation. No private patient data. The participant must review and understand the work before submitting.
+
+Fresh work started November 15, 2026. The earlier in-event kidney experiment is documented in [KIDNEY_HISTORY.md](KIDNEY_HISTORY.md); its files and numbers are not the active HealthNotes app. No pre-event practice project code or model was imported. [Demo outline](DEMO.md).

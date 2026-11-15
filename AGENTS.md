@@ -1,12 +1,7 @@
-# KidneyLens development notes
+# HealthNotes development context
 
-Fresh Veritas AI 2026 hackathon entry, started November 15, 2026. This is separate from the user's pre-event practice projects. Do not copy or extend their source, trained models or results.
+Active scope accepted by user: at-home diabetes visit preparation without lab results or disease probabilities. Main model: local TF-IDF educational topic retrieval. Current entry point index.html loads visit.css, visit-match.js, visit-app.js. Follow README.md and METHODS.md. Earlier in-event KidneyLens files remain solely as documented history in KIDNEY_HISTORY.md; do not present their results as HealthNotes results. Do not import pre-event practice code/models.
 
-Scope: an adult kidney-lab pattern classification demo using the public UCI Chronic Kidney Disease dataset (336). Intended user: a nurse exploring how missing laboratory results affect an educational model. No diagnosis, future-risk, triage urgency or clinical validation claims.
+No diagnosis, urgency prediction, reassurance from no match, treatment changes or claims of clinical accuracy. Use primary medical sources, cite each educational topic. No personal data storage, analytics, API keys, uploads or patient identifiers. Render user input with textContent. Print/copy only on user action. Invalidate generated notes when inputs change.
 
-Keep preprocessing inside training pipelines. Select model and decision threshold on validation only. Reserve test data for final reporting; never tune to improve reported test results. Group identical selected input profiles across partitions. Report actual counts, precision and recall together, plus a majority-class baseline. Document limited sample size, selection bias, missingness and label limitations.
-
-The deployed app runs the exported logistic model in the browser. Changes to preprocessing or inference must pass Python/JavaScript parity checks. Do not collect patient names, identifiers or upload personal health records. Demo profiles must be synthetic. Do not persist entered lab values or add analytics/API calls.
-
-Read README.md, evaluation/results.json and the source before continuing. No invented results or claims. Credit UCI, libraries, tutorials if used, and ChatGPT/Codex assistance. Keep the public repository safe to share. The user must understand and explain the project.
-
+Model vocabulary and benchmark were frozen before first evaluation. Preserve observed failures; do not tune to the test questions. node tests/visit-benchmark.cjs reproduces 12/15 topic matches vs 5/15 baseline and five edge checks. This is author-written synthetic retrieval data, not clinical validation. Clearly disclose any later evaluation/design changes. Maintain cream/sage/forest visual style and keyboard/mobile usability. Credit AI assistance and explain the app to the participant before submission.

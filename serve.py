@@ -1,4 +1,4 @@
-"""Serve only public KidneyLens assets locally. python serve.py --port 8770"""
+"""Serve only public HealthNotes assets locally. python serve.py --port 8770"""
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit,unquote
@@ -6,7 +6,7 @@ import argparse
 import mimetypes
 
 ROOT=Path(__file__).resolve().parent
-PUBLIC={'index.html','styles.css','app.js','inference.js','model.json','evaluation/results.json','evaluation/parity_cases.json','evaluation/summary.png'}
+PUBLIC={'visit.css','visit-match.js','visit-app.js','index.html','styles.css','app.js','inference.js','model.json','evaluation/results.json','evaluation/parity_cases.json','evaluation/summary.png'}
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         route=unquote(urlsplit(self.path).path).lstrip('/') or 'index.html'
@@ -29,5 +29,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8770);args=parser.parse_args()
-    print(f'KidneyLens: http://127.0.0.1:{args.port}/',flush=True)
+    print(f'HealthNotes: http://127.0.0.1:{args.port}/',flush=True)
     ThreadingHTTPServer(('127.0.0.1',args.port),Handler).serve_forever()
