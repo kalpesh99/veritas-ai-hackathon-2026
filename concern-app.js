@@ -1,0 +1,31 @@
+'use strict';
+const $=id=>document.getElementById(id);
+let lastSummary='',revision=0,selected=null;
+const make=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+function clearNotes(){VisitFeatures.reset();lastSummary='';$('summary').textContent='';$('summary-panel').hidden=true;$('copy-status').textContent='';}
+function clearOutput(){revision++;selected=null;clearNotes();$('resources').replaceChildren();$('choices').replaceChildren();$('followup-panel').hidden=true;$('followup').value='';$('form-status').textContent='';$('status').textContent='Describe your concern, or browse the topics yourself. No condition is assumed.';$('find').disabled=false;}
+function selectTopic(topic){selected=topic;$('resources').replaceChildren();$('followup-panel').hidden=false;clearNotes();
+ $('followup-label').textContent=topic?topic.followup:'What else would you like the health professional to know?';
+ $('status').textContent=topic?'You selected '+topic.title+'. This is reading you chose, not an AI diagnosis.':'No topic selected. You can still make visit notes in your own words.';
+ if(topic){const a=make('article',undefined,'topic');a.append(make('h3',topic.title),make('p',topic.description),make('p','Question you could ask: '+topic.question,'question'));const link=make('a','Read the original health information ↗');link.href=topic.url;link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';a.append(link);const details=make('details');details.append(make('summary','How was this topic chosen?'),make('p','You confirmed this topic. When AI suggestions are used, a pretrained sentence model compares the meaning of your description with our topic descriptions. It can still misread context, negation, or unfamiliar wording. There is no disease probability or symptom assessment.'));a.append(details);VisitFeatures.offer(a,topic);$('resources').append(a);}
+}
+function showChoices(topics,heading){$('choices').replaceChildren();$('choices').append(make('h3',heading));for(const t of topics){const b=make('button',t.title);b.type='button';b.className='topic-choice';b.addEventListener('click',()=>selectTopic(t));$('choices').append(b);}const none=make('button','None of these / make notes without a topic');none.type='button';none.addEventListener('click',()=>selectTopic(null));$('choices').append(none);}
+$('prep-form').addEventListener('submit',async e=>{e.preventDefault();const detail=$('followup').value.trim();const text=[$('concern').value.trim(),detail].filter(Boolean).join('\n');if(!text){$('form-status').textContent='Describe your concern first, or choose Browse all topics.';$('concern').focus();return;}clearOutput();$('followup').value=detail;const ticket=revision;$('find').disabled=true;$('status').textContent='Loading the local language model. First use downloads model files and can take a few minutes. You can browse topics while it loads.';
+ try{const [ranked]=await SemanticClient.rank([text],ConcernCatalog.topics,msg=>{if(ticket===revision)$('status').textContent=msg;});if(ticket!==revision)return;const candidates=ranked.filter(x=>x.score>=0.30).slice(0,3).map(x=>ConcernCatalog.topics.find(t=>t.id===x.id));
+  if(candidates.length){$('status').textContent='These are possible reading topics, not findings. Which, if any, fits what you meant?';showChoices(candidates,'Please confirm what you want to discuss');}
+  else{$('status').textContent='I could not narrow that down reliably. What changed, where do you notice it, and how is it different from usual?';showChoices(ConcernCatalog.topics,'Choose a topic, or continue without one');$('followup-panel').hidden=false;$('followup-label').textContent='Can you add a little more detail about what you mean?';}
+ }catch(error){if(ticket===revision){$('status').textContent=error.message;showChoices(ConcernCatalog.topics,'Choose a topic manually');}}
+ finally{if(ticket===revision)$('find').disabled=false;}
+});
+$('browse').addEventListener('click',()=>{revision++;$('find').disabled=false;$('status').textContent='Choose the topic you want to read about. These are not suggested diagnoses.';showChoices(ConcernCatalog.topics,'All available reading topics');});
+$('without-topic').addEventListener('click',()=>{revision++;$('find').disabled=false;selectTopic(null);});
+$('make-notes').addEventListener('click',()=>{const concern=$('concern').value.trim();if(!concern&&!$('followup').value.trim()){$('status').textContent='Please enter your concern or an additional detail before making notes.';$('concern').focus();return;}
+ const base=['MY HEALTH VISIT NOTES','My own statements and selected questions — not a diagnosis or clinical assessment.','', 'My concern: '+(concern||'Not entered'),'When I first noticed it: '+($('duration').value||'Not entered'),'Context I want to share: '+($('context').value.trim()||'Not entered'),'Additional detail: '+($('followup').value.trim()||'Not entered'),'', 'Reading topic I selected: '+(selected?.title||'None'), 'A question I may ask: '+(selected?.question||'What information would help you assess my concern?'),...(selected?['Source: '+selected.url]:[]),'','This prototype does not identify a condition, rule anything out, assess urgency, or recommend treatment. Do not use it to decide whether care can wait.'].join('\n');VisitFeatures.start(base,concern);$('summary-panel').hidden=false;});
+$('followup').addEventListener('input',clearNotes);
+$('refine').addEventListener('click',()=>{$('prep-form').requestSubmit();});
+$('clear').addEventListener('click',()=>{$('prep-form').reset();clearOutput();});
+$('prep-form').addEventListener('input',clearOutput);$('prep-form').addEventListener('change',clearOutput);
+$('print').addEventListener('click',()=>window.print());
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(lastSummary);$('copy-status').textContent='Notes copied. They may remain in your device clipboard.';}catch{$('copy-status').textContent='Copy unavailable. Select your notes manually or download the text file.';}});
+$('example').addEventListener('click',()=>{$('prep-form').reset();$('concern').value='I feel completely worn out even after a quiet day.';$('context').value='Fictional example only.';clearOutput();$('prep-form').requestSubmit();});
+clearOutput();
