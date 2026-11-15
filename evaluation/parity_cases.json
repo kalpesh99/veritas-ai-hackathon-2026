@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Routine-looking example",
+    "inputs": {
+      "age": 40,
+      "bgr": 95,
+      "bu": 25,
+      "sc": 0.9,
+      "hemo": 14.2,
+      "sg": 1.025,
+      "al": 0
+    },
+    "expected_score": 0.04463399075921488
+  },
+  {
+    "name": "CKD-like example",
+    "inputs": {
+      "age": 62,
+      "bgr": 180,
+      "bu": 70,
+      "sc": 2.4,
+      "hemo": 10.2,
+      "sg": 1.01,
+      "al": 2
+    },
+    "expected_score": 0.9996327008890892
+  },
+  {
+    "name": "One missing result",
+    "inputs": {
+      "age": 62,
+      "bgr": null,
+      "bu": 70,
+      "sc": 2.4,
+      "hemo": 10.2,
+      "sg": 1.01,
+      "al": 2
+    },
+    "expected_score": 0.9987888043534561
+  },
+  {
+    "name": "Missing urine tests",
+    "inputs": {
+      "age": 40,
+      "bgr": 95,
+      "bu": 25,
+      "sc": 0.9,
+      "hemo": 14.2,
+      "sg": null,
+      "al": null
+    },
+    "expected_score": 0.08628662882447924
+  },
+  {
+    "name": "Mixed-pattern example",
+    "inputs": {
+      "age": 40.0,
+      "bgr": 95.0,
+      "bu": 25.0,
+      "sc": 0.9,
+      "hemo": 14.2,
+      "sg": 1.015,
+      "al": 1.0
+    },
+    "expected_score": 0.9117114434130938
+  }
+]
