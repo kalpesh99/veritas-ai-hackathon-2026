@@ -1,0 +1,109 @@
+{
+  "task": "Educational topic retrieval, NOT medical prediction",
+  "dataset": "15 authored synthetic English queries; one author-assigned relevant topic each; not real patient questions",
+  "model": "TF-IDF + cosine; word regex; catalog-only fitting; top 1; abstain on zero overlap",
+  "baseline": "Always return symptoms",
+  "total": 15,
+  "correct": 12,
+  "top1_accuracy": 0.8,
+  "baseline_correct": 5,
+  "baseline_accuracy": 0.3333333333333333,
+  "limitations": [
+    "Tiny author-written evaluation, not independent or clinical validation",
+    "No paraphrase understanding; zero-overlap queries are withheld",
+    "Known-diabetes wording can overlap with testing terms",
+    "Only three English topics; no urgency assessment"
+  ],
+  "predictions": [
+    {
+      "query": "I am drinking water all the time",
+      "expected": "symptoms",
+      "predicted": "symptoms",
+      "correct": true
+    },
+    {
+      "query": "My vision is blurry lately",
+      "expected": "symptoms",
+      "predicted": "symptoms",
+      "correct": true
+    },
+    {
+      "query": "I keep getting up to pee",
+      "expected": "symptoms",
+      "predicted": "symptoms",
+      "correct": true
+    },
+    {
+      "query": "I feel exhausted and hungry",
+      "expected": "symptoms",
+      "predicted": "symptoms",
+      "correct": true
+    },
+    {
+      "query": "Can a home glucose meter diagnose me?",
+      "expected": "testing",
+      "predicted": "testing",
+      "correct": true
+    },
+    {
+      "query": "What does an HbA1c result mean?",
+      "expected": "testing",
+      "predicted": "testing",
+      "correct": true
+    },
+    {
+      "query": "My mother has diabetes should I get screened?",
+      "expected": "testing",
+      "predicted": "testing",
+      "correct": true
+    },
+    {
+      "query": "Do I need to fast before a blood test?",
+      "expected": "testing",
+      "predicted": "testing",
+      "correct": true
+    },
+    {
+      "query": "What should I ask about my insulin prescription?",
+      "expected": "management",
+      "predicted": "management",
+      "correct": true
+    },
+    {
+      "query": "How do I plan my meals?",
+      "expected": "management",
+      "predicted": "management",
+      "correct": true
+    },
+    {
+      "query": "Can I talk to my care team about exercise?",
+      "expected": "management",
+      "predicted": "management",
+      "correct": true
+    },
+    {
+      "query": "I was diagnosed and want a daily routine",
+      "expected": "management",
+      "predicted": "management",
+      "correct": true
+    },
+    {
+      "query": "Why am I feeling washed out lately?",
+      "expected": "symptoms",
+      "predicted": null,
+      "correct": false
+    },
+    {
+      "query": "What should I eat for supper?",
+      "expected": "management",
+      "predicted": null,
+      "correct": false
+    },
+    {
+      "query": "Can heredity matter?",
+      "expected": "testing",
+      "predicted": null,
+      "correct": false
+    }
+  ]
+}
