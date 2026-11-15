@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#153e35">
+  <meta name="description" content="KidneyLens: a student research demo exploring kidney lab patterns and the effect of missing results.">
+  <title>KidneyLens — See the pattern. Know the limits.</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="inference.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to lab inputs</a>
+<div class="shell">
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="KidneyLens home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M13 7c-6-4-11 2-9 10 1 6 8 11 11 6 2-3-4-4-3-7 1-3 4-7 1-9Z" stroke="currentColor" stroke-width="1.7"/><path d="M20 7c6-4 11 2 9 10-1 6-8 11-11 6-2-3 4-4 3-7-1-3-4-7-1-9Z" stroke="currentColor" stroke-width="1.7"/></svg></span>Kidney<span class="brand-light">Lens</span></a>
+    <nav aria-label="Main navigation"><a href="#workspace">Lab explorer</a><a href="#evidence">The evidence</a><a href="#about">About</a></nav>
+    <span class="event-tag"><span></span> HACKATHON / 2026</span>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><div class="eyebrow"><span class="dot"></span> A SMALL MODEL. A CLEARER CONVERSATION.</div>
+      <h1 id="hero-title">See the pattern.<br><em>Know the limits.</em></h1>
+      <p class="hero-intro">Explore how a research model recognizes chronic kidney disease (CKD) patterns in a lab panel—and what happens when part of the picture is missing.</p>
+      <div class="hero-meta"><span><i aria-hidden="true">↳</i> Built for a nurse’s lab-review workflow</span><span>Adults 18–90 · Seven inputs</span></div></div>
+      <aside class="hero-note" aria-label="What this app does"><div class="note-top"><span>THE QUESTION WE ASKED</span><span class="tiny-icon" aria-hidden="true">↗</span></div><h2>What if the lab panel<br>isn’t complete?</h2><p>A prediction is only part of the story. We tested a model, compared it with a simple baseline, and hid lab values to measure what changes.</p><div class="note-footer"><span class="note-icon" aria-hidden="true">◌</span> Missing information stays visible.</div></aside>
+    </section>
+    <div class="prototype-notice"><span class="notice-symbol" aria-hidden="true">i</span><p><strong>Research prototype, not medical advice.</strong> This model recognizes labels in one small study. It does not diagnose kidney disease, predict future risk, or determine urgency. Use synthetic examples here; do not enter identifying patient information.</p></div>
+    <section class="workspace" id="workspace" aria-labelledby="workspace-title">
+      <div class="section-heading"><div><span class="section-kicker">01 / EXPLORE A LAB PANEL</span><h2 id="workspace-title">A little context. A clearer picture.</h2></div><p>Try an example, then change a result.</p></div>
+      <div class="workspace-grid">
+        <section class="panel inputs-panel" aria-labelledby="input-title"><div class="panel-heading"><div><span class="section-kicker">YOUR INPUTS</span><h3 id="input-title">The lab panel</h3></div><button id="reset" type="button" class="text-button">Clear all <span aria-hidden="true">↺</span></button></div>
+          <div class="example-row" aria-label="Synthetic examples"><span>TRY A SYNTHETIC EXAMPLE</span><div><button type="button" data-example="0">Routine-looking</button><button type="button" data-example="1">CKD-like</button><button type="button" data-example="3">Missing labs</button></div></div>
+          <form id="lab-form" novalidate>
+            <div class="field-grid">
+              <div class="field"><label for="age">Age <span>years</span></label><input type="number" id="age" name="age" min="18" max="90" step="1" placeholder="e.g. 40" aria-describedby="age-hint"><small id="age-hint">Adult profiles only. No date of birth needed.</small></div>
+              <div class="field"><label for="bgr">Random blood glucose <span>mg/dL</span></label><input type="number" id="bgr" name="bgr" step="any" placeholder="e.g. 95"><small>Not a fasting-glucose measurement.</small></div>
+              <div class="field"><label for="bu">Blood urea <span>mg/dL</span></label><input type="number" id="bu" name="bu" step="any" placeholder="e.g. 25"><small>Use blood urea, not BUN; they are different units of reporting.</small></div>
+              <div class="field"><label for="sc">Serum creatinine <span>mg/dL</span></label><input type="number" id="sc" name="sc" step="any" placeholder="e.g. 0.9"><small>Check the report’s unit before entering a value.</small></div>
+              <div class="field"><label for="hemo">Hemoglobin <span>g/dL</span></label><input type="number" id="hemo" name="hemo" step="any" placeholder="e.g. 14.2"></div>
+              <div class="field"><label for="sg">Urine specific gravity <span>ratio</span></label><select id="sg" name="sg"><option value="">Not available</option><option>1.005</option><option>1.010</option><option>1.015</option><option>1.020</option><option>1.025</option></select><small>Choose the exact study-supported category.</small></div>
+              <div class="field field-wide"><label for="al">Urine albumin <span>study grade, 0–5</span></label><div class="albumin-line"><select id="al" name="al"><option value="">Not available</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><small>This is the dataset’s ordinal grade—not urine ACR, mg/L, or a value to convert from another test.</small></div></div>
+            </div>
+            <div class="input-footer"><span class="privacy-icon" aria-hidden="true">◇</span><p>Blank means unknown, never zero.<br>Your entries stay in this browser tab and are not saved.</p></div>
+          </form>
+        </section>
+        <aside class="result-column" aria-labelledby="result-title">
+          <section class="panel result-panel"><div class="panel-heading"><div><span class="section-kicker">THE MODEL’S VIEW</span><h3 id="result-title">Pattern summary</h3></div><span class="live-indicator"><span></span> LIVE</span></div>
+          <div id="loading" class="loading">Loading the research model…</div>
+          <div class="result-content" id="result-content" hidden>
+            <div class="completion-line"><span>Information available</span><strong id="completion">0 / 7</strong></div><div class="completion-track" aria-hidden="true"><span id="completion-fill"></span></div>
+            <div id="result-card" class="result-card empty"><div class="result-orbit" aria-hidden="true">◌</div><span id="result-eyebrow" class="section-kicker">START WITH A LAB PANEL</span><h4 id="result-heading">The picture starts here.</h4><p id="result-message">Add an age and lab results, or choose a synthetic example. We’ll show both the pattern and the gaps.</p></div>
+            <div id="summary-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+            <div id="quality" class="quality-card" hidden></div>
+            <div id="score-section" hidden><div class="score-header"><span>Research model score</span><strong id="score-value">—</strong></div><div class="score-track" aria-hidden="true"><span id="score-fill"></span><i id="threshold-marker"></i></div><p class="fine" id="score-caption"></p><p class="score-caution">A model score is not your personal probability of disease. The flag comes from a threshold selected on validation data.</p></div>
+            <div id="explanations" hidden><div class="divider"></div><h4 class="small-heading">What moved the model?</h4><p class="fine">Largest model contributions, compared with its training reference. These are associations, not causes.</p><div id="factor-list"></div></div>
+          </div>
+          </section>
+          <div class="next-card"><span class="section-kicker">BEYOND THE NUMBER</span><h3>A result begins a conversation.</h3><p>This demo cannot tell you whether symptoms need care. A low score does not rule out kidney disease. A healthcare professional must interpret actual results and decide what to do next.</p></div>
+        </aside>
+      </div>
+    </section>
+    <section class="evidence-section" id="evidence" aria-labelledby="evidence-title"><div class="section-heading"><div><span class="section-kicker">02 / SHOW THE WORK</span><h2 id="evidence-title">Evidence before confidence.</h2></div><a class="subtle-link" href="evaluation/results.json">See the complete results <span aria-hidden="true">↗</span></a></div>
+      <p class="section-intro">A reserved test set. A simple baseline. Every missed case and false alarm counted. These are study results—not clinical validation.</p>
+      <div class="metrics-grid" id="metrics"></div>
+      <div class="evidence-grid"><article class="panel"><span class="section-kicker">A FAIR COMPARISON</span><h3>Does it beat “always CKD”?</h3><p>The majority class in the training sample is CKD. Predicting that for everyone is our deliberately simple baseline.</p><div class="table-wrap"><table id="comparison-table"><caption class="sr-only">Reserved-test baseline and model comparison</caption><thead><tr><th>Measure</th><th>Baseline</th><th>KidneyLens</th></tr></thead><tbody></tbody></table></div><p class="fine" id="test-description"></p></article>
+      <article class="panel"><span class="section-kicker">OUR OWN QUESTION</span><h3>What changes when labs go missing?</h3><p>We randomly hid one or two additional lab values in the test set, repeated 20 times, and kept the same model and threshold.</p><div id="missingness-bars"></div><p class="fine">These are stress-test averages, not new patients or clinical performance guarantees. Real-world missingness may behave differently.</p></article></div>
+      <details class="study-details"><summary>The limits we would want you to know <span aria-hidden="true">+</span></summary><div class="limits-grid"><div><h4>A small, selected sample</h4><p>UCI’s original dataset contains 400 records collected over a short period. We use only records with known adult ages. Its CKD frequency does not represent the general population.</p></div><div><h4>Current labels, not future risk</h4><p>The model classifies the study’s CKD label using related laboratory measurements. It does not predict who will develop CKD, and strong test results can reflect a highly separable study sample.</p></div><div><h4>Missingness can mislead</h4><p>Unknown numbers use training medians; unknown categories use the training mode. This can hide important information. More than two missing fields, an absent adult age, or an out-of-training-range value blocks the score.</p></div><div><h4>More validation comes first</h4><p>Preprocessing is fitted on training data only. Identical input profiles stay together across splits. External validation, calibration and broader fairness testing remain unfinished.</p></div></div><div id="failure-examples"></div></details>
+    </section>
+    <section class="about-section" id="about"><div><span class="section-kicker">03 / BUILT WITH INTENTION</span><h2>One user.<br>One honest question.</h2></div><div><p>KidneyLens is a fresh student project for the Veritas AI International High School Hackathon 2026, in the AI + Health track. Its question is how incomplete laboratory panels change a model’s behavior.</p><p>Logistic regression keeps the equation inspectable. The entire exported calculation runs on your device. No account, uploads, analytics, or paid AI service is needed.</p><div class="source-links"><a href="https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease" target="_blank" rel="noopener noreferrer">UCI dataset &amp; CC BY 4.0 licence ↗</a><a href="https://github.com/kalpesh99/veritas-ai-hackathon-2026" target="_blank" rel="noopener noreferrer">Code, methods &amp; credits ↗</a></div></div></section>
+  </main>
+  <footer><a class="footer-brand" href="#">KidneyLens</a><p>This project is a prototype and is not medical advice.</p><span>Made to ask better questions. / 2026</span></footer>
+</div>
+<noscript><p class="noscript">JavaScript is needed to run the local research model. You can still read the project methods on GitHub.</p></noscript>
+</body>
+</html>
