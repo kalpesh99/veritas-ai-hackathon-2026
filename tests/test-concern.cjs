@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict');
-const {topics}=require('../concern-catalog.js');
+const topics=require('../evaluation/catalog-v1.json');
 const fixture=require('../concern-fixtures.js');
 const report=require('../evaluation/semantic-results.json');
 let n=0;function check(f){f();n++;}
