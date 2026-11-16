@@ -40,3 +40,7 @@ node tests/test-concern.cjs runs 17 catalog/source integrity, fixture/result pro
 
 ## Judge-facing evidence added November 15
 The recorded-results panel summarizes the existing, unchanged evaluation JSON, without rerunning or tuning inference. Of 18 supported queries, one target was absent from the offered shortlist. Six suggestions differed from the author target, across five supported queries. None of seven vague/unrelated queries received a suggestion. A non-target suggestion is not independently labeled irrelevant and is not a clinical false positive. Per-topic counts use the same single-label assumption. Snapshot metrics are separated from live inference in the Model lab. Pretrained-model exposure to evaluation-like wording is unknown; no claim of pretraining disjointness is made.
+
+## Batch scoring note (added November 15, 2026)
+
+The Model lab embeds all evaluation questions in one batch. The app embeds one description at a time. With the q8 model the two modes give slightly different similarity scores (up to about 0.035 in a November 15 stress test), so a few rows near the 0.30 cutoff can differ between the lab and the app. In that test, 9 of the 60 questions received a different offered-topic list when scored one at a time; the headline counts stayed at 47/48 top-1, 42/48 offered and 0/12 outside, with non-target extras at 25 across 17 queries instead of 25 across 16. The recorded results in `evaluation/` are batch results and were not changed.
