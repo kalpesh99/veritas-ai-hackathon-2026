@@ -52,9 +52,15 @@ MiniLM runs in a local Web Worker using Transformers.js 3.0.0, WASM q8, mean poo
 
 ## Sources and credits
 
-[Complete source/alias catalog](SOURCE_CATALOG.md): 21 MedlinePlus pages, one NIDDK page and two CDC pages, checked November 15, 2026. Authored summaries, prompts and aliases are not endorsed or clinician-reviewed by those sources.
+**Reference content.** The [complete source/alias catalog](SOURCE_CATALOG.md) lists every exact page: 21 [MedlinePlus](https://medlineplus.gov/) pages, one [NIDDK](https://www.niddk.nih.gov/) page and two [CDC](https://www.cdc.gov/) pages, checked November 15, 2026. Authored summaries, prompts and aliases are not endorsed or clinician-reviewed by those sources.
 
-Model: [Xenova/all-MiniLM-L6-v2, Apache 2.0](https://huggingface.co/Xenova/all-MiniLM-L6-v2), revision `751bff37182d3f1213fa05d7196b954e230abad9`; [Sentence Transformers](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2); [Transformers.js](https://huggingface.co/docs/transformers.js); [ONNX Runtime](https://onnxruntime.ai/). ChatGPT/OpenAI Codex assisted with research, design, implementation, catalog/examples, tests and writing. Aarjav must review and understand the work.
+**Pretrained model.** [Xenova/all-MiniLM-L6-v2](https://huggingface.co/Xenova/all-MiniLM-L6-v2) (Apache 2.0), revision `751bff37182d3f1213fa05d7196b954e230abad9`, based on [sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) (Sentence Transformers). Used as-is; not trained or fine-tuned in this project.
+
+**Libraries and hosting.** [Transformers.js](https://huggingface.co/docs/transformers.js) 3.0.0 and [ONNX Runtime](https://onnxruntime.ai/). Runtime and model files are downloaded from [jsDelivr](https://www.jsdelivr.com/) and [Hugging Face](https://huggingface.co/).
+
+**Dataset (superseded experiment only).** The earlier in-event kidney experiment ([KIDNEY_HISTORY.md](KIDNEY_HISTORY.md), [KIDNEY_METHODS.md](KIDNEY_METHODS.md)) used the [UCI Chronic Kidney Disease dataset](https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease) (Rubini et al., 2015; [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). HealthNotes itself uses no patient dataset; its evaluation questions are fictional and were written by the authors with AI assistance.
+
+**AI assistance.** ChatGPT/OpenAI Codex assisted with research, design, implementation, catalog/examples, tests and writing. Claude (Anthropic) helped check the published links, prepare the submission form and write this credits section. Aarjav must review and understand the work.
 
 Project work began November 15 during the event. [Technical notes](TECHNICAL_NOTES.md) explain reproduction and history; [keyword](KEYWORD_HISTORY.md) and [kidney](KIDNEY_HISTORY.md) experiments are superseded in-event work. Old nine-topic counts are historical, not current performance. Next: independent relevance evaluation, consented usability testing and professional review.
 
