@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parent
 PUBLIC={'concern-catalog.js','semantic-worker.js','semantic-client.js','concern-app.js','concern-fixtures.js','concern-lab.js','visit-features.js','visit-fixtures.js','visit-lab.js','visit.css','visit-match.js','visit-app.js','index.html','styles.css','app.js','inference.js','model.json','evaluation/results.json','evaluation/parity_cases.json','evaluation/summary.png'}
 PUBLIC.update({'expanded-fixtures.js','evaluation/catalog-v2.json','evaluation/catalog-v1.json','expanded-recorded-results.js','evaluation/expanded-results.json','concern-evidence.js','recorded-results.js','judge-results.js',
                'evaluation/semantic-results.json','METHODS.md','README.md',
-               'TECHNICAL_NOTES.md','DEMO.md'})
+               'TECHNICAL_NOTES.md','DEMO.md','WRITEUP.md','SUBMISSION.md','SOURCE_CATALOG.md','evaluation/expanded-regression.json'})
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         route=unquote(urlsplit(self.path).path).lstrip('/') or 'index.html'

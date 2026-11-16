@@ -1,60 +1,23 @@
-# HealthNotes
+# HealthNotes technical notes
 
-**AI + Health · Veritas AI 2026 · Prototype, not medical advice**
+The active entry point is index.html. ConcernCatalog defines24 source-linked topics and168 authored manual-search aliases. concern-app.js coordinates user confirmation and visit notes; visit-features.js manages the agenda and export. semantic-client.js calls semantic-worker.js, which loads pinned MiniLM via Transformers.js3.0.0 and runs WASM q8 inference locally. Aliases are not neural-model training data or embedding inputs. SOURCE_CATALOG.md and evaluation/catalog-v2.json provide provenance.
 
-[Open the hosted app](https://kalpesh99.github.io/veritas-ai-hackathon-2026/) · [Methods](METHODS.md) · [Semantic results](evaluation/semantic-results.json)
+## Reproduce current results
 
-People describe health concerns in everyday language, not necessarily clinical keywords. Our first diabetes-only word matcher missed that need. HealthNotes now uses a **pretrained sentence-embedding model** to suggest educational reading across **nine topics**, asks the person to confirm what they meant, and builds personal visit notes. It does not diagnose, rule out a condition, determine urgency, or recommend treatment.
+Run python serve.py and open http://127.0.0.1:8770/. In Model lab run the new60-question evaluation; it uses expanded-fixtures.js. Recorded outputs are evaluation/expanded-results.json and the matching expanded-recorded-results.js display artifact. Current raw47/48 versus lexical33/48; offered42/48;6misses;25non-target extras across16/48;0/12 vague/unrelated suggestions. No post-run tuning. See METHODS.md for limitations.
 
-## What happens in the app
+Run node tests/test-concern.cjs, node tests/test-evidence.cjs and node tests/test-expanded.cjs:59 assertions. These are engineering/provenance checks, not clinical tests or a rerun of the neural model. expand-catalog.py rebuilds current catalog data from the frozen original catalog plus authored expansion data.
 
-1. Describe a concern in ordinary words. There are no symptom checkboxes that assume diabetes.
-2. A local MiniLM model compares the description with nine authored topic descriptions. It offers up to three possible reading topics. The person must confirm one, choose another, or choose none.
-3. If the description cannot be narrowed down, the app asks for more detail. The person can refine suggestions or use manual browsing. Follow-up questions are authored prompts, not an AI medical interview.
-4. Make a visit summary containing the person's exact statements, selected topic, optional details and checklist. Add and prioritize personal questions; print, copy or download notes.
+## Historical artifacts
 
-Topics: energy/fatigue, headaches, digestion, cough, sleep, worry/anxiety, diabetes testing, heart information, stroke awareness. These are educational catalog headings, not a list of conditions inferred from the person. Emergency information is fixed and always visible; there is no emergency-detection algorithm.
+Original nine-topic catalog: evaluation/catalog-v1.json. Original25-query report: evaluation/semantic-results.json and recorded-results.js;17 historical-provenance and13 evidence checks preserve its numbers. The same original questions rerun against24 topics are saved separately in evaluation/expanded-regression.json. Different candidate catalogs/question sets are not a controlled accuracy comparison.
 
-## Model and privacy
+Superseded keyword files: visit-app.js, visit-match.js, visit-fixtures.js, visit-lab.js; see KEYWORD_HISTORY.md. Superseded kidney files: app.js, styles.css, inference.js, model.json, train.py and kidney evaluation artifacts; see KIDNEY_HISTORY.md. They are retained as in-event history, not active performance claims. Pre-event HealthScreen work is separate.
 
-**Xenova/all-MiniLM-L6-v2**, pinned revision `751bff37182d3f1213fa05d7196b954e230abad9`, runs with **Transformers.js 3.0.0, WebAssembly q8**, mean pooling and normalized 384-dimensional embeddings. Cosine similarity ranks title-plus-description catalog embeddings. A fixed, unvalidated retrieval cutoff of **0.30** suppresses weak suggestions; it is not a medical threshold. No probabilities or treatment responses are generated.
+## Privacy and limitations
 
-On first use, runtime/model files download from jsDelivr and Hugging Face (tens of MB). The browser may cache those files. The description is passed to a local Web Worker, not uploaded to an inference service. The application stores no health entries, uses no analytics, and needs no API key. Context, timing, checklist and follow-up notes stay in page memory; explicitly using Refine sends the follow-up detail only to the local worker too. Printing, copying or downloading creates a copy controlled by the user. Source links visit third-party health sites. Browser extensions, device clipboard, downloads and browser-managed restoration are outside app control.
+Network requests load static model/runtime assets; app code does not upload health text, save entries or add analytics. Context stays in notes; explicitly refining includes added detail in local inference. Asset caches can persist; clipboard/downloads/prints and browser-managed state are outside app control. A revision counter discards stale async output after edits or Clear. Render input with textContent. A fixed emergency notice is not an emergency-detection algorithm. No diagnosis, care-timing decision, treatment or disease-probability output.
 
-AI requires HTTPS or a local web server, not opening an HTML file directly. Manual browsing and notes remain available when the model fails, takes too long or is not loaded. Worker results are ignored after edits, Clear or manual selection so stale suggestions cannot overwrite the current state.
+## Submission state
 
-## Evaluation: what we actually observed
-
-Frozen synthetic set, authored with AI assistance before first semantic evaluation: **18 supported descriptions (two per topic), four unrelated queries, three vague descriptions**. No model, threshold or catalog tuning after these results.
-
-| Measurement | Result |
-| --- | ---: |
-| Intended topic ranked first, before cutoff | 18/18 |
-| Intended topic in the offered shortlist, after cutoff | **17/18** |
-| Word-based TF-IDF baseline, first topic | 13/18 |
-| Vague/unrelated queries with suggestions withheld | 7/7 |
-
-**Retained failure:** “I am wiped out by the end of an ordinary day” ranked energy first but scored 0.143, below 0.30, so no semantic topic was offered. The UI asks for clarification/manual selection. Some shortlists contain irrelevant alternatives, such as sleep alongside stroke awareness. Confirmation helps avoid an automatic claim but does not establish safety. All rows and raw scores are visible in the model lab and JSON.
-
-These tiny author-labeled examples are not an independent test, user study, clinical validation or evidence of real-world accuracy. No urgency, diagnosis, negation, language, fairness, spelling or mixed-intent reliability has been established. The model is a general English sentence encoder, not a medical reasoning model. Broader independent relevance and usability testing are next.
-
-## Run and reproduce
-
-```sh
-python serve.py
-# Open http://127.0.0.1:8770/
-node tests/test-concern.cjs
-```
-
-Open **Model lab → Run the synthetic evaluation** to run actual browser model inference and download its result JSON. The Node test checks catalog integrity, threshold boundaries, result provenance and the baseline; it does not rerun the neural model. There are 17 such checks. No local package install is needed for the hosted app; the first model download needs an internet connection. Slow devices may not support the model well.
-
-## Sources and credits
-
-Authored educational summaries and links, consulted November 15, 2026:
-- MedlinePlus/National Library of Medicine: [fatigue](https://medlineplus.gov/fatigue.html), [headaches](https://medlineplus.gov/headache.html), [digestion](https://medlineplus.gov/digestivediseases.html), [cough](https://medlineplus.gov/cough.html), [sleep](https://medlineplus.gov/sleepdisorders.html), [anxiety](https://medlineplus.gov/anxiety.html).
-- NIDDK: [diabetes tests and diagnosis](https://www.niddk.nih.gov/health-information/diabetes/overview/tests-diagnosis).
-- CDC: [heart attack awareness](https://www.cdc.gov/heart-disease/about/heart-attack.html), [stroke warning signs](https://www.cdc.gov/stroke/signs-symptoms/index.html).
-- [Sentence Transformers all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2), [Xenova ONNX model and Apache 2.0 license](https://huggingface.co/Xenova/all-MiniLM-L6-v2), [Transformers.js](https://huggingface.co/docs/transformers.js), [ONNX Runtime](https://onnxruntime.ai/).
-- ChatGPT/OpenAI Codex assisted with design, source research, authored catalog/queries, implementation, debugging, evaluation and documentation. Participant must review, understand and explain the work. Sources and model authors do not endorse this app; content is not clinician-reviewed.
-
-All project work began during the event on November 15, 2026. No pre-event practice code/model/results were imported. [KEYWORD_HISTORY.md](KEYWORD_HISTORY.md) records the superseded diabetes word matcher; [KIDNEY_HISTORY.md](KIDNEY_HISTORY.md) records the earlier in-event lab experiment. Their code/results remain solely as history and are not the active app. [Two-minute demo outline](DEMO.md).
+Current write-up:WRITEUP.md; links:SUBMISSION.md. Participant chose no video. The hackathon form has not been submitted by this assistant. Aarjav must review and understand the work and provide email privately in the form.
