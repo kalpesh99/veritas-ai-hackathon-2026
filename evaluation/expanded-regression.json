@@ -1,0 +1,333 @@
+{
+  "model": "Xenova/all-MiniLM-L6-v2",
+  "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+  "runtime": "Transformers.js 3.0.0, WASM q8, mean pooling, normalized",
+  "threshold": 0.3,
+  "scope": "Synthetic educational retrieval only. Not medical accuracy; no independent or clinician validation.",
+  "supportedCount": 18,
+  "top1Correct": 17,
+  "top3ContainsTarget": 17,
+  "lexicalTop1Correct": 12,
+  "ambiguousOrUnrelatedCount": 7,
+  "ambiguousOrUnrelatedWithheld": 7,
+  "rows": [
+    {
+      "query": "I am wiped out by the end of an ordinary day",
+      "expected": "energy",
+      "top1": "weight",
+      "topScore": 0.145582677090362,
+      "offered": [],
+      "top1Correct": false,
+      "top3ContainsTarget": false,
+      "withheld": true,
+      "lexicalTop1": "energy"
+    },
+    {
+      "query": "I have no get up and go lately",
+      "expected": "energy",
+      "top1": "energy",
+      "topScore": 0.3711087368338776,
+      "offered": [
+        "energy"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "sleep"
+    },
+    {
+      "query": "My head keeps pounding in the afternoons",
+      "expected": "headache",
+      "top1": "headache",
+      "topScore": 0.4486470993603477,
+      "offered": [
+        "headache",
+        "energy"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "headache"
+    },
+    {
+      "query": "There is a tight band of pain around my forehead",
+      "expected": "headache",
+      "top1": "headache",
+      "topScore": 0.4862830075001019,
+      "offered": [
+        "headache"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "headache"
+    },
+    {
+      "query": "My belly gets uncomfortable after dinner",
+      "expected": "digestion",
+      "top1": "digestion",
+      "topScore": 0.49873175533326736,
+      "offered": [
+        "digestion"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "digestion"
+    },
+    {
+      "query": "I have trouble going to the toilet and feel bloated",
+      "expected": "digestion",
+      "top1": "digestion",
+      "topScore": 0.36366872936579947,
+      "offered": [
+        "digestion"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "sleep"
+    },
+    {
+      "query": "I keep hacking and clearing my throat",
+      "expected": "cough",
+      "top1": "cough",
+      "topScore": 0.3265027546756478,
+      "offered": [
+        "cough"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "throat"
+    },
+    {
+      "query": "This cough has been hanging around for weeks",
+      "expected": "cough",
+      "top1": "cough",
+      "topScore": 0.4155219781598481,
+      "offered": [
+        "cough"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "cough"
+    },
+    {
+      "query": "I lie awake for hours before drifting off",
+      "expected": "sleep",
+      "top1": "sleep",
+      "topScore": 0.3764252473050881,
+      "offered": [
+        "sleep",
+        "energy"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "dizziness"
+    },
+    {
+      "query": "I wake up again and again through the night",
+      "expected": "sleep",
+      "top1": "sleep",
+      "topScore": 0.330117077787242,
+      "offered": [
+        "sleep"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "sleep"
+    },
+    {
+      "query": "My thoughts keep racing about things that might go wrong",
+      "expected": "stress",
+      "top1": "stress",
+      "topScore": 0.3084465240664521,
+      "offered": [
+        "stress"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "stress"
+    },
+    {
+      "query": "I feel on edge and cannot stop worrying",
+      "expected": "stress",
+      "top1": "stress",
+      "topScore": 0.4921664310096867,
+      "offered": [
+        "stress"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": null
+    },
+    {
+      "query": "My dad has diabetes and I wonder about a blood test",
+      "expected": "diabetes",
+      "top1": "diabetes",
+      "topScore": 0.609713905559269,
+      "offered": [
+        "diabetes"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "diabetes"
+    },
+    {
+      "query": "What is an A1C supposed to tell me",
+      "expected": "diabetes",
+      "top1": "diabetes",
+      "topScore": 0.33294124548500137,
+      "offered": [
+        "diabetes"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "diabetes"
+    },
+    {
+      "query": "Where can I learn the warning signs of a heart attack",
+      "expected": "heart",
+      "top1": "heart",
+      "topScore": 0.5053636279371037,
+      "offered": [
+        "heart",
+        "stroke"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "heart"
+    },
+    {
+      "query": "I want to ask about cardiovascular health",
+      "expected": "heart",
+      "top1": "heart",
+      "topScore": 0.6487872769520987,
+      "offered": [
+        "heart",
+        "stroke",
+        "diabetes"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "heart"
+    },
+    {
+      "query": "What does FAST mean when learning about strokes",
+      "expected": "stroke",
+      "top1": "stroke",
+      "topScore": 0.41099086345623315,
+      "offered": [
+        "stroke"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "headache"
+    },
+    {
+      "query": "Where can I read about sudden one sided weakness and difficulty speaking",
+      "expected": "stroke",
+      "top1": "stroke",
+      "topScore": 0.4268833226612297,
+      "offered": [
+        "stroke",
+        "sleep",
+        "dizziness"
+      ],
+      "top1Correct": true,
+      "top3ContainsTarget": true,
+      "withheld": false,
+      "lexicalTop1": "stroke"
+    },
+    {
+      "query": "How do I fix the wifi on my laptop",
+      "expected": null,
+      "top1": "cough",
+      "topScore": 0.027745753161012812,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    },
+    {
+      "query": "Can you solve my algebra homework",
+      "expected": null,
+      "top1": "skin",
+      "topScore": 0.08395289332105497,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    },
+    {
+      "query": "What will the weather be tomorrow",
+      "expected": null,
+      "top1": "fever",
+      "topScore": 0.167368040193523,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    },
+    {
+      "query": "I need directions to the library",
+      "expected": null,
+      "top1": "medicines",
+      "topScore": 0.13396673303504197,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    },
+    {
+      "query": "I feel weird",
+      "expected": null,
+      "top1": "tingling",
+      "topScore": 0.2106846771809565,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    },
+    {
+      "query": "Something does not seem right",
+      "expected": null,
+      "top1": "eyes",
+      "topScore": 0.14964439719124792,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    },
+    {
+      "query": "I have a problem",
+      "expected": null,
+      "top1": "sleep",
+      "topScore": 0.21004751404226982,
+      "offered": [],
+      "top1Correct": null,
+      "top3ContainsTarget": null,
+      "withheld": true,
+      "lexicalTop1": null
+    }
+  ],
+  "catalogVersion": "24-topics-v2",
+  "dataset": "Original 25 questions rerun against expanded catalog; NOT original recorded results"
+}
