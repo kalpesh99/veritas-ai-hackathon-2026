@@ -1,14 +1,488 @@
 (function(root){
- const topics=[
- {id:'energy',title:'Tiredness and low energy',text:'Fatigue, feeling worn out, drained, exhausted or lacking energy during daily activities, even after resting.',description:'Fatigue means tiredness or a lack of energy. It has many possible explanations; this page does not identify the cause in your case.',url:'https://medlineplus.gov/fatigue.html',question:'What could explain the change in my energy, and what details would help you assess it?',followup:'How is your energy different from usual, and what activities are affected?'},
- {id:'headache',title:'Headaches and head pain',text:'Pain, aching, throbbing or pressure in the head. Repeated headaches and questions about when head pain happens.',description:'Headaches can take different forms. A description of the pattern can help your conversation with a health professional; a reading match cannot identify a headache type.',url:'https://medlineplus.gov/headache.html',question:'What should I tell you about the pattern of my headaches?',followup:'Where do you notice the head pain, and how often does it happen?'},
- {id:'digestion',title:'Stomach and digestive concerns',text:'Upset stomach, belly discomfort after meals, nausea, bloating, heartburn, constipation, diarrhea or changes in bowel movements.',description:'Digestive concerns can involve different parts of the digestive system. This overview is general information, not an explanation for a particular symptom.',url:'https://medlineplus.gov/digestivediseases.html',question:'Which details about my stomach or bowel changes should we discuss?',followup:'What digestive change do you notice, and does it seem connected to meals?'},
- {id:'cough',title:'Cough and airway concerns',text:'Coughing repeatedly, clearing the throat, a cough that lingers, irritation in the airways and questions about coughing.',description:'Coughing is a reflex that helps clear the airways. There are different reasons for a cough; this page does not determine your cause or urgency.',url:'https://medlineplus.gov/cough.html',question:'What should I tell you about how long I have been coughing and what it feels like?',followup:'How long has the cough been happening, and what seems to bring it on?'},
- {id:'sleep',title:'Trouble sleeping',text:'Difficulty falling asleep, staying asleep, waking up at night, poor sleep quality, insomnia or changes in sleeping patterns.',description:'Sleep problems can affect sleep quality, timing or duration. This overview can help you prepare questions about your sleep pattern.',url:'https://medlineplus.gov/sleepdisorders.html',question:'What information about my sleep pattern would help us discuss this?',followup:'Is the difficulty falling asleep, staying asleep, or something else?'},
- {id:'stress',title:'Worry and anxiety',text:'Feeling worried, anxious, nervous, tense or overwhelmed, fear that is difficult to set aside, persistent uneasiness.',description:'Anxiety can involve feelings of worry or uneasiness. This educational overview does not diagnose an anxiety disorder or assess mental health urgency.',url:'https://medlineplus.gov/anxiety.html',question:'How can I describe the effect that worry is having on my daily life?',followup:'When do you notice the worry, and how does it affect your day?'},
- {id:'diabetes',title:'Diabetes questions and testing',text:'Questions about diabetes, blood sugar, A1C tests, family history of diabetes, increased thirst together with frequent urination, or an existing diabetes diagnosis.',description:'A health professional uses blood tests to diagnose diabetes. Feeling tired or thirsty alone does not establish diabetes, and this tool does not diagnose it.',url:'https://www.niddk.nih.gov/health-information/diabetes/overview/tests-diagnosis',question:'Would diabetes testing be appropriate for my situation, and how would we interpret it?',followup:'Is your question about testing, a previous result, or living with a diagnosis?'},
- {id:'heart',title:'Heart health information',text:'Questions about heart disease, heart attacks, chest pressure or discomfort, heart health, or discussing cardiovascular concerns.',description:'This CDC page describes heart attack warning signs. Suspected heart attack symptoms need emergency help, not an online questionnaire. This tool does not assess whether a symptom is heart-related.',url:'https://www.cdc.gov/heart-disease/about/heart-attack.html',question:'What should I discuss about my heart-health concerns after any immediate care needs are addressed?',followup:'For a non-urgent information question, what aspect of heart health do you want to understand?'},
- {id:'stroke',title:'Stroke awareness information',text:'Questions about stroke warning signs, sudden trouble speaking, one-sided weakness, facial drooping, or stroke awareness.',description:'CDC advises calling 911 immediately for stroke warning signs, including sudden one-sided weakness or trouble speaking. Do not use this tool to decide whether those symptoms can wait.',url:'https://www.cdc.gov/stroke/signs-symptoms/index.html',question:'What would I like to understand about stroke awareness after immediate care needs are addressed?',followup:'For a non-urgent information question, what do you want to understand about stroke awareness?'}
- ];
- const api={topics};if(typeof module==='object'&&module.exports)module.exports=api;else root.ConcernCatalog=api;
+const topics=[
+  {
+    "id": "energy",
+    "title": "Tiredness and low energy",
+    "text": "Fatigue, feeling worn out, drained, exhausted or lacking energy during daily activities, even after resting.",
+    "description": "Fatigue means tiredness or a lack of energy. It has many possible explanations; this page does not identify the cause in your case.",
+    "url": "https://medlineplus.gov/fatigue.html",
+    "question": "What could explain the change in my energy, and what details would help you assess it?",
+    "followup": "How is your energy different from usual, and what activities are affected?",
+    "aliases": [
+      "fatigue",
+      "worn out",
+      "low energy",
+      "exhausted",
+      "drained",
+      "tired all day",
+      "tiredness"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "headache",
+    "title": "Headaches and head pain",
+    "text": "Pain, aching, throbbing or pressure in the head. Repeated headaches and questions about when head pain happens.",
+    "description": "Headaches can take different forms. A description of the pattern can help your conversation with a health professional; a reading match cannot identify a headache type.",
+    "url": "https://medlineplus.gov/headache.html",
+    "question": "What should I tell you about the pattern of my headaches?",
+    "followup": "Where do you notice the head pain, and how often does it happen?",
+    "aliases": [
+      "head pain",
+      "head ache",
+      "migraine questions",
+      "pounding head",
+      "headace",
+      "headaches",
+      "forehead pressure"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "digestion",
+    "title": "Stomach and digestive concerns",
+    "text": "Upset stomach, belly discomfort after meals, nausea, bloating, heartburn, constipation, diarrhea or changes in bowel movements.",
+    "description": "Digestive concerns can involve different parts of the digestive system. This overview is general information, not an explanation for a particular symptom.",
+    "url": "https://medlineplus.gov/digestivediseases.html",
+    "question": "Which details about my stomach or bowel changes should we discuss?",
+    "followup": "What digestive change do you notice, and does it seem connected to meals?",
+    "aliases": [
+      "tummy ache",
+      "belly pain",
+      "bloating",
+      "stomache",
+      "constipated",
+      "loose stools",
+      "heartburn"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "cough",
+    "title": "Cough and airway concerns",
+    "text": "Coughing repeatedly, clearing the throat, a cough that lingers, irritation in the airways and questions about coughing.",
+    "description": "Coughing is a reflex that helps clear the airways. There are different reasons for a cough; this page does not determine your cause or urgency.",
+    "url": "https://medlineplus.gov/cough.html",
+    "question": "What should I tell you about how long I have been coughing and what it feels like?",
+    "followup": "How long has the cough been happening, and what seems to bring it on?",
+    "aliases": [
+      "coughing",
+      "hacking",
+      "throat clearing",
+      "lingering cough",
+      "dry cough",
+      "cought",
+      "airway irritation"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "sleep",
+    "title": "Trouble sleeping",
+    "text": "Difficulty falling asleep, staying asleep, waking up at night, poor sleep quality, insomnia or changes in sleeping patterns.",
+    "description": "Sleep problems can affect sleep quality, timing or duration. This overview can help you prepare questions about your sleep pattern.",
+    "url": "https://medlineplus.gov/sleepdisorders.html",
+    "question": "What information about my sleep pattern would help us discuss this?",
+    "followup": "Is the difficulty falling asleep, staying asleep, or something else?",
+    "aliases": [
+      "insomnia",
+      "cannot sleep",
+      "waking at night",
+      "sleepless",
+      "poor sleep",
+      "cant sleep",
+      "restless night"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "stress",
+    "title": "Worry and anxiety",
+    "text": "Feeling worried, anxious, nervous, tense or overwhelmed, fear that is difficult to set aside, persistent uneasiness.",
+    "description": "Anxiety can involve feelings of worry or uneasiness. This educational overview does not diagnose an anxiety disorder or assess mental health urgency.",
+    "url": "https://medlineplus.gov/anxiety.html",
+    "question": "How can I describe the effect that worry is having on my daily life?",
+    "followup": "When do you notice the worry, and how does it affect your day?",
+    "aliases": [
+      "anxious",
+      "worry",
+      "on edge",
+      "nervous",
+      "overwhelmed",
+      "anxeity",
+      "uneasy"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "diabetes",
+    "title": "Diabetes questions and testing",
+    "text": "Questions about diabetes, blood sugar, A1C tests, family history of diabetes, increased thirst together with frequent urination, or an existing diabetes diagnosis.",
+    "description": "A health professional uses blood tests to diagnose diabetes. Feeling tired or thirsty alone does not establish diabetes, and this tool does not diagnose it.",
+    "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/tests-diagnosis",
+    "question": "Would diabetes testing be appropriate for my situation, and how would we interpret it?",
+    "followup": "Is your question about testing, a previous result, or living with a diagnosis?",
+    "aliases": [
+      "blood sugar",
+      "A1C",
+      "diabetic questions",
+      "diabetis",
+      "glucose test",
+      "diabetes testing",
+      "family history of diabetes"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "NIDDK"
+  },
+  {
+    "id": "heart",
+    "title": "Heart health information",
+    "text": "Questions about heart disease, heart attacks, chest pressure or discomfort, heart health, or discussing cardiovascular concerns.",
+    "description": "This CDC page describes heart attack warning signs. Suspected heart attack symptoms need emergency help, not an online questionnaire. This tool does not assess whether a symptom is heart-related.",
+    "url": "https://www.cdc.gov/heart-disease/about/heart-attack.html",
+    "question": "What should I discuss about my heart-health concerns after any immediate care needs are addressed?",
+    "followup": "For a non-urgent information question, what aspect of heart health do you want to understand?",
+    "aliases": [
+      "cardiovascular",
+      "heart attack information",
+      "chest discomfort",
+      "heart health",
+      "cardiac questions",
+      "heart disease",
+      "chest pressure"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "CDC"
+  },
+  {
+    "id": "stroke",
+    "title": "Stroke awareness information",
+    "text": "Questions about stroke warning signs, sudden trouble speaking, one-sided weakness, facial drooping, or stroke awareness.",
+    "description": "CDC advises calling 911 immediately for stroke warning signs, including sudden one-sided weakness or trouble speaking. Do not use this tool to decide whether those symptoms can wait.",
+    "url": "https://www.cdc.gov/stroke/signs-symptoms/index.html",
+    "question": "What would I like to understand about stroke awareness after immediate care needs are addressed?",
+    "followup": "For a non-urgent information question, what do you want to understand about stroke awareness?",
+    "aliases": [
+      "FAST awareness",
+      "stroke signs",
+      "one sided weakness",
+      "facial droop",
+      "slurred speech",
+      "stroke information",
+      "sudden speech change"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "CDC"
+  },
+  {
+    "id": "dizziness",
+    "title": "Dizziness and balance concerns",
+    "text": "Feeling dizzy, lightheaded, unsteady, off balance or as though the room is spinning. Questions about vertigo and balance changes.",
+    "description": "This reference offers general information about dizziness and balance concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/dizzinessandvertigo.html",
+    "question": "What details about dizziness and balance concerns would help a health professional assess my concern?",
+    "followup": "What do you mean by dizzy: spinning, faintness, unsteadiness, or something else?",
+    "aliases": [
+      "dizzy",
+      "room spinning",
+      "light headed",
+      "off balance",
+      "vertigo",
+      "dizzyness",
+      "unsteady"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "back",
+    "title": "Back pain and stiffness",
+    "text": "Pain, soreness, stiffness or aching in the upper or lower back. Back discomfort with sitting, standing or movement.",
+    "description": "This reference offers general information about back pain and stiffness. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/backpain.html",
+    "question": "What details about back pain and stiffness would help a health professional assess my concern?",
+    "followup": "Where in your back do you notice the discomfort, and what activities affect it?",
+    "aliases": [
+      "lower back",
+      "back ache",
+      "backache",
+      "stiff back",
+      "lumbar pain",
+      "upper back",
+      "backpain"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "joints",
+    "title": "Joint pain and stiffness",
+    "text": "Aching, stiffness, swelling or discomfort in joints such as knees, wrists, shoulders, hips or fingers. Questions about joint movement.",
+    "description": "This reference offers general information about joint pain and stiffness. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/jointdisorders.html",
+    "question": "What details about joint pain and stiffness would help a health professional assess my concern?",
+    "followup": "Which joint or joints are affected, and what changes have you noticed?",
+    "aliases": [
+      "knees ache",
+      "joint pain",
+      "stiff fingers",
+      "aching joints",
+      "sore knee",
+      "wrist pain",
+      "joint stiffness"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "skin",
+    "title": "Skin rash and itching",
+    "text": "A rash, itchy skin, red patches, irritated skin, bumps or a change in skin appearance. Questions about skin rashes.",
+    "description": "This reference offers general information about skin rash and itching. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/rashes.html",
+    "question": "What details about skin rash and itching would help a health professional assess my concern?",
+    "followup": "Where is the skin change, and when did you first notice it?",
+    "aliases": [
+      "itchy skin",
+      "red patches",
+      "rash",
+      "skin bumps",
+      "itching",
+      "rashes",
+      "skin irritation"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "urinary",
+    "title": "Urination and bladder concerns",
+    "text": "Changes in urination, discomfort or burning while passing urine, urinary frequency, leakage or questions about bladder habits.",
+    "description": "This reference offers general information about urination and bladder concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/urineandurination.html",
+    "question": "What details about urination and bladder concerns would help a health professional assess my concern?",
+    "followup": "What change in urination would you like to describe to a health professional?",
+    "aliases": [
+      "peeing",
+      "burning pee",
+      "passing urine",
+      "bladder",
+      "urinary frequency",
+      "urination",
+      "urine changes"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "fever",
+    "title": "Fever and temperature questions",
+    "text": "A raised body temperature, fever, feeling feverish, chills or questions about a measured temperature.",
+    "description": "This reference offers general information about fever and temperature questions. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/fever.html",
+    "question": "What details about fever and temperature questions would help a health professional assess my concern?",
+    "followup": "Have you measured a temperature, and what would you like to discuss about it?",
+    "aliases": [
+      "feverish",
+      "high temperature",
+      "chills",
+      "temperature reading",
+      "feaver",
+      "raised temperature",
+      "fever"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "allergy",
+    "title": "Allergy information",
+    "text": "Questions about allergies, sneezing, itchy or watery eyes, runny nose and symptoms noticed around pollen, pets or other exposures.",
+    "description": "This reference offers general information about allergy information. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/allergy.html",
+    "question": "What details about allergy information would help a health professional assess my concern?",
+    "followup": "Have you noticed any pattern with places, seasons or exposures? This does not identify an allergy.",
+    "aliases": [
+      "sneezing",
+      "pollen",
+      "hay fever",
+      "allergies",
+      "alergies",
+      "runny nose",
+      "watery eyes"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "ears",
+    "title": "Ear and hearing concerns",
+    "text": "Ear discomfort, earache, ringing in the ears, reduced hearing, blocked ears or changes in hearing.",
+    "description": "This reference offers general information about ear and hearing concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/eardisorders.html",
+    "question": "What details about ear and hearing concerns would help a health professional assess my concern?",
+    "followup": "Is your concern discomfort, hearing, ringing, or another ear change?",
+    "aliases": [
+      "earache",
+      "ear pain",
+      "blocked ear",
+      "ringing ears",
+      "hearing change",
+      "tinnitus questions",
+      "ear pressure"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "eyes",
+    "title": "Eye and vision concerns",
+    "text": "Changes in eyesight, blurry vision, irritated or dry eyes, eye discomfort, difficulty seeing clearly or questions about eye health.",
+    "description": "This reference offers general information about eye and vision concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/eyediseases.html",
+    "question": "What details about eye and vision concerns would help a health professional assess my concern?",
+    "followup": "What has changed in your vision or eye comfort, and when did it begin?",
+    "aliases": [
+      "blurry vision",
+      "dry eyes",
+      "eye pain",
+      "eyesight",
+      "vision change",
+      "blured vision",
+      "eye irritation"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "teeth",
+    "title": "Tooth and dental concerns",
+    "text": "Toothache, tooth sensitivity, pain with hot or cold food, dental discomfort or questions about teeth.",
+    "description": "This reference offers general information about tooth and dental concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/toothdisorders.html",
+    "question": "What details about tooth and dental concerns would help a health professional assess my concern?",
+    "followup": "Which tooth or area is affected, and what do you notice when eating or drinking?",
+    "aliases": [
+      "toothache",
+      "sensitive tooth",
+      "teeth hurt",
+      "dental pain",
+      "tooth pain",
+      "tooth sensitivity",
+      "teeth questions"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "periods",
+    "title": "Menstrual and period questions",
+    "text": "Questions about menstrual periods, cycle timing, period cramps, changes in menstrual flow or irregular periods.",
+    "description": "This reference offers general information about menstrual and period questions. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/menstruation.html",
+    "question": "What details about menstrual and period questions would help a health professional assess my concern?",
+    "followup": "What change in your cycle or period would you like to discuss?",
+    "aliases": [
+      "period cramps",
+      "menstrual cycle",
+      "irregular periods",
+      "period changes",
+      "menstruation",
+      "monthly cycle",
+      "menstral"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "weight",
+    "title": "Unintentional weight loss",
+    "text": "Losing weight without trying, clothes becoming looser, unexplained weight loss or questions about a drop in body weight.",
+    "description": "This reference offers general information about unintentional weight loss. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/ency/article/003107.htm",
+    "question": "What details about unintentional weight loss would help a health professional assess my concern?",
+    "followup": "What weight change have you noticed, over what period, and was it intentional?",
+    "aliases": [
+      "losing weight",
+      "unplanned weight loss",
+      "clothes loose",
+      "weight dropped",
+      "unintentional loss",
+      "weight loss",
+      "unexplained weight"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "medicines",
+    "title": "Medicine and side-effect questions",
+    "text": "Questions to ask a doctor or pharmacist about medicines, prescriptions, possible side effects, medication lists or medicine instructions.",
+    "description": "This reference offers general information about medicine and side-effect questions. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/medicines.html",
+    "question": "What details about medicine and side-effect questions would help a health professional assess my concern?",
+    "followup": "Which medicine question do you want to ask your doctor or pharmacist? Do not change treatment based on this app.",
+    "aliases": [
+      "medication questions",
+      "prescription",
+      "side effects",
+      "pharmacist",
+      "medicine list",
+      "medecine",
+      "meds"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "throat",
+    "title": "Sore throat concerns",
+    "text": "Throat soreness, pain when swallowing, a scratchy throat, throat irritation or questions about a sore throat.",
+    "description": "This reference offers general information about sore throat concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/sorethroat.html",
+    "question": "What details about sore throat concerns would help a health professional assess my concern?",
+    "followup": "What does the throat discomfort feel like, and how long has it been happening?",
+    "aliases": [
+      "scratchy throat",
+      "swallowing hurts",
+      "sore throat",
+      "throat pain",
+      "sorethroat",
+      "painful swallowing",
+      "throat soreness"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  },
+  {
+    "id": "tingling",
+    "title": "Numbness and tingling concerns",
+    "text": "Pins and needles, tingling sensations, reduced sensation or numbness in hands, feet or other parts of the body.",
+    "description": "This reference offers general information about numbness and tingling concerns. It does not identify the cause of your concern, assess urgency or recommend treatment.",
+    "url": "https://medlineplus.gov/ency/article/003206.htm",
+    "question": "What details about numbness and tingling concerns would help a health professional assess my concern?",
+    "followup": "Where do you notice the sensation, and how would you describe the change? Sudden stroke signs need immediate help, not this app.",
+    "aliases": [
+      "pins and needles",
+      "tingling",
+      "numb fingers",
+      "numbness",
+      "numbnes",
+      "hands tingle",
+      "reduced sensation"
+    ],
+    "sourceChecked": "2026-11-15",
+    "sourceOrganization": "MedlinePlus / U.S. National Library of Medicine"
+  }
+];
+const normalize=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const stop=new Set('a an the and or my i am have is of in to with'.split(' '));
+function search(query){const terms=normalize(query).split(' ').filter(w=>w&&!stop.has(w));if(!terms.length)return topics;return topics.filter(t=>{const words=normalize([t.title,t.text,...t.aliases].join(' ')).split(' ');return terms.every(q=>words.some(w=>w.startsWith(q)));});}
+const api={topics,search,version:'24-topics-v2'};if(typeof module==='object'&&module.exports)module.exports=api;else root.ConcernCatalog=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

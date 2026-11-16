@@ -15,3 +15,7 @@ Record fictional information only. Open the live app and warm up the model befor
 Before submitting, check code and README links without signing in. Submit exactly one project in AI + Health; list Aarjav Vaghasiya, LASA High School, and the correct email on the form. Deadline in the supplied brief: November 15 at 11:59 PM Eastern / 10:59 PM Central.
 
 Be ready to explain: normalized embeddings; cosine similarity; why top-1 and shortlist metrics differ; the unvalidated cutoff; why extra topics are not clinical false alarms; the retained miss; model-download versus health-text privacy; and what Clear does during pending inference. No claims that this prevents illness, guarantees understanding, or improves patient outcomes have been validated.
+
+## Current expansion update
+
+The deployed catalog is now24 topics and168 searchable authored phrases. Demonstrate Browse all topics → search “pins and needles” or “dizzyness”, then select the matching reference yourself. Model lab's current60-query results: raw47/48 vs baseline33/48; target offered42/48;6misses;25extra non-target suggestions across16/48;0/12 vague/unrelated suggestions. Do not present the older18/18/17/18 counts as current results. Mention retained failures and that reference pages/aliases are not patient training data or medical validation. No new claim about clinical safety or winning.

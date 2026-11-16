@@ -1,3 +1,15 @@
+# Current 24-topic expansion methods
+
+The model runtime, pinned MiniLM revision, mean pooling, normalization, 0.30 retrieval cutoff and maximum three suggestions are unchanged. The original nine embedding descriptions are preserved exactly in evaluation/catalog-v1.json. Fifteen new authored, source-linked descriptions expand the candidate set to 24. No keyword aliases are appended to model inputs: 168 authored aliases support manual prefix-word library search only. All query words after a small stop list must prefix-match library words; no fuzzy disease inference or medication advice. Source URLs, organizations, checked dates and aliases are exported in evaluation/catalog-v2.json and SOURCE_CATALOG.md. “Checked” means the linked reference was opened, not clinician validation or a systematic review.
+
+A new 60-query fixture (expanded-fixtures.js) was frozen before its first browser inference: two descriptions per topic (48 total), eight unrelated queries and four vague descriptions. These author-written examples were not used for project fitting or threshold selection. The same general encoder may have seen similar language in pretraining; overlap is unknown. There is no claim of independent authorship or clinical validation. First-run results: raw top rank47/48 vs same-catalog lexical baseline33/48; target actually offered42/48;6 missed targets;25 non-target extras across16/48 supported descriptions;0/12 vague/unrelated descriptions offered topics. See evaluation/expanded-results.json. No scoring, cutoff or catalog changes followed these observations.
+
+Six missed cases are preserved, including idiomatic urination wording and a menstrual-cycle description. Some irrelevant alternatives remain. Confirmation/manual browsing are workflow choices, not medically validated safeguards. Neither this expanded set nor the old set establishes safety, spelling/negation/mixed-intent reliability, fairness or real-user benefit. Do not pool or compare their counts as a controlled accuracy improvement: catalogs and questions differ.
+
+The original nine-topic report remains unchanged in evaluation/semantic-results.json. Tests/test-concern.cjs now explicitly uses the saved original catalog to preserve that report's baseline comparison; test-evidence.cjs checks its counts. Test-expanded.cjs checks the current catalog/aliases, source metadata, fixture freezing and result consistency (29 assertions). A rerun of original questions against 24 topics is a regression run with different candidates, not a reproduction of the original experiment.
+
+# Original nine-topic methods (historical)
+
 # HealthNotes semantic retrieval methods
 
 ## Task and intended workflow

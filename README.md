@@ -6,6 +6,22 @@
 
 **This project is a prototype and is not medical advice.**
 
+## Current catalog expansion (24 topics)
+
+The active app now offers **24 source-linked educational topics and 168 authored search phrases**, including synonyms and selected misspellings. [Complete reference catalog](SOURCE_CATALOG.md) · [Download catalog JSON](evaluation/catalog-v2.json). These are navigation resources, **not clinical research records or medical training data**. Fifteen new MedlinePlus topics cover dizziness, back/joint discomfort, skin, urination, fever, allergies, ears, eyes, teeth, menstrual questions, unintentional weight loss, medicines, sore throat and tingling. Keyword aliases filter the manual library only; the sentence encoder still ranks title-plus-description embeddings and requires user confirmation.
+
+**New frozen 60-query synthetic evaluation:** intended raw top rank **47/48** vs TF-IDF **33/48** on supported descriptions; intended topic actually offered **42/48**, with **6 missed targets** and **25 non-target extras across 16/48** descriptions. **0/12** vague/unrelated descriptions received suggestions. [All new outputs](evaluation/expanded-results.json). No threshold, encoder or catalog changes followed this run. The original nine embedding descriptions and original 25-query report remain intact. The new and original figures use different queries/catalogs and must not be treated as directly comparable accuracy gains. Both sets are author-written, synthetic, non-independent retrieval evaluations, not medical accuracy.
+
+Manual library search recognizes phrases such as “pins and needles,” “tummy ache” and “dizzyness” without a model download. No matching phrase does not rule out a health issue. Missed examples include “It stings when I pass water” and “My monthly bleeding is no longer regular”; all failures are retained. More topics can introduce extra wrong alternatives. The app never diagnoses or decides whether care can wait.
+
+Run `node tests/test-expanded.cjs` for 29 expansion checks; the 17 historical provenance checks and 13 evidence-counting checks also pass (59 total). Run actual current inference with Model lab → Run the new 60-question evaluation. The original 25 can be rerun against the expanded catalog as a regression exercise; that is different from reproducing the historical nine-topic report.
+
+The library build script is `expand-catalog.py`; it starts from the saved original catalog, attaches authored aliases, and generates the current JS/catalog manifest. No patient data or scraping/training job is involved. Every source URL was checked November 15, 2026; the medical sources have not reviewed or endorsed the authored descriptions, aliases, prompts or model.
+
+## Original nine-topic project write-up (historical)
+
+The following section documents the earlier version. Use the current counts above when describing the deployed app.
+
 ## The problem
 
 An adult at home preparing a non-emergency appointment may know what feels different without knowing the medical words to search for. HealthNotes helps that person find educational reading and organize their own questions for a health professional. It does not diagnose, assess urgency, recommend treatment or give disease percentages.
