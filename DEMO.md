@@ -1,13 +1,17 @@
-# HealthNotes two-minute demo
+# HealthNotes: two-minute judge demo
 
-Use fictional data only. Open the hosted site early so the language model can download before recording.
+Record fictional information only. Open the live app and warm up the model before recording. The video is optional; if recorded, upload it as an unlisted YouTube video or a viewable Google Drive link. This outline is not a completed video.
 
-0:00–0:20 — Problem: people describe concerns in everyday language. Our first diabetes keyword prototype failed that need. We redesigned the central AI task as general educational topic retrieval, with user confirmation instead of a disease score.
+**0:00–0:15 — User and problem.** “I’m Aarjav. HealthNotes is for an adult at home preparing a non-emergency appointment. People know what feels different but may not know the medical search terms. We help them organize their own concerns, not diagnose them.”
 
-0:20–0:55 — Click Try a fictional example (worn out after a quiet day). Show the energy topic suggestion, confirm it and answer the authored follow-up. Explain that MiniLM compares sentence meaning locally; there is no medical diagnosis and no uploaded health text.
+**0:15–0:50 — Real input to real output.** Type “I have no get up and go lately”, run suggestions, and confirm the energy reading topic. Explain: “A pretrained MiniLM encoder compares sentence meaning locally. I must choose the topic; the app does not tell me which disease I have.” Add fictional duration/context and make visit notes.
 
-0:55–1:15 — Make visit notes, add a personal clinician question, prioritize it and show download/print. Then try a vague description to show clarification/manual browsing. No symptom checkbox assumes diabetes.
+**0:50–1:10 — Useful output.** Add “What information should I track before our appointment?” to the agenda and show Download notes. Briefly show Browse all topics: model failure does not block visit preparation. Explain that the follow-up prompt is authored, not a medical AI interview.
 
-1:15–1:45 — Model lab: run the 25 synthetic queries. Explain raw rank 18/18, offered target 17/18, lexical baseline 13/18, seven vague/unrelated examples withheld. Show the retained wiped-out failure; do not call this medical accuracy or a clinical study.
+**1:10–1:40 — Fair comparison and retained failure.** Show the recorded results section: same-task raw top-1 18/18 versus TF-IDF 13/18; actual offered target 17/18 after cutoff; one missed reading topic; six non-target extras; no suggestions for seven vague/unrelated descriptions. Show the “wiped out” failure and its 0.143 score. “These are 25 fictional author-labeled examples, not clinical accuracy or independent validation.” The Model lab can rerun inference; first-use downloads may take minutes.
 
-1:45–2:00 — Limits: nine topics, English only, general sentence encoder, synthetic tests, imperfect alternatives, no triage or treatment. Next: independently labeled questions and professional relevance/usability review. State AI assistance and be prepared to explain embeddings, cosine similarity, cutoff, worker privacy and the failure case.
+**1:40–2:00 — Limits, contribution and next step.** “We built the local retrieval, confirmation, manual fallback and notes workflow during the event, with AI coding assistance. The encoder is pretrained, not our trained medical model. English only, nine topics, no diagnosis or urgency assessment. Next I’d collect independently labeled relevance tests and conduct consented usability and professional review.”
+
+Before submitting, check code and README links without signing in. Submit exactly one project in AI + Health; list Aarjav Vaghasiya, LASA High School, and the correct email on the form. Deadline in the supplied brief: November 15 at 11:59 PM Eastern / 10:59 PM Central.
+
+Be ready to explain: normalized embeddings; cosine similarity; why top-1 and shortlist metrics differ; the unvalidated cutoff; why extra topics are not clinical false alarms; the retained miss; model-download versus health-text privacy; and what Clear does during pending inference. No claims that this prevents illness, guarantees understanding, or improves patient outcomes have been validated.
