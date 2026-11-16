@@ -58,6 +58,8 @@ MiniLM runs in a local Web Worker using Transformers.js 3.0.0, WASM q8, mean poo
 
 **Libraries and hosting.** [Transformers.js](https://huggingface.co/docs/transformers.js) 3.0.0 and [ONNX Runtime](https://onnxruntime.ai/). Runtime and model files are downloaded from [jsDelivr](https://www.jsdelivr.com/) and [Hugging Face](https://huggingface.co/).
 
+**Tutorials and event materials.** Veritas AI International High School Hackathon materials: the hacker guide, optional Colab starter notebook and sample submission shared with participants by the organizers, and the pre-event [workshops](https://highschoolhackathon.org/workshops.html). See also the public [project briefs](https://highschoolhackathon.org/briefs.html).
+
 **Dataset (superseded experiment only).** The earlier in-event kidney experiment ([KIDNEY_HISTORY.md](KIDNEY_HISTORY.md), [KIDNEY_METHODS.md](KIDNEY_METHODS.md)) used the [UCI Chronic Kidney Disease dataset](https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease) (Rubini et al., 2015; [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). HealthNotes itself uses no patient dataset; its evaluation questions are fictional and were written by the authors with AI assistance.
 
 **AI assistance.** ChatGPT/OpenAI Codex assisted with research, design, implementation, catalog/examples, tests and writing. Claude (Anthropic) helped check the published links, prepare the submission form and write this credits section. Aarjav must review and understand the work.
